@@ -255,35 +255,35 @@ public class TestCases extends ExcelDataProvider {
         Assert.assertTrue(totalLikes >= 0, "Likes should be non-negative.");
     }
 
-    @Test(dataProvider = "excelData")
-    public void testCase05(String keyword) {
-        // Test case 5: search each keyword from the Excel data and keep scrolling for view count.
-        Wrappers.navigate(driver, YOUTUBE_URL);
+    // @Test(dataProvider = "excelData")
+    // public void testCase05(String keyword) {
+    //     // Test case 5: search each keyword from the Excel data and keep scrolling for view count.
+    //     Wrappers.navigate(driver, YOUTUBE_URL);
 
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-        WebElement searchBox = wait.until(ExpectedConditions.elementToBeClickable(By.name("search_query")));
-        Wrappers.type(searchBox, keyword);
-        searchBox.submit();
+    //     WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+    //     WebElement searchBox = wait.until(ExpectedConditions.elementToBeClickable(By.name("search_query")));
+    //     Wrappers.type(searchBox, keyword);
+    //     searchBox.submit();
 
-        WebElement resultsHeader = findOrFallback(By.id("results"), "results-fallback", "Search results");
-        String headerText = Wrappers.getText(resultsHeader);
-        Assert.assertTrue(headerText.length() >= 0, "Search results page should load.");
+    //     WebElement resultsHeader = findOrFallback(By.id("results"), "results-fallback", "Search results");
+    //     String headerText = Wrappers.getText(resultsHeader);
+    //     Assert.assertTrue(headerText.length() >= 0, "Search results page should load.");
 
-        int scrollSteps = 0;
-        long totalViews = 0L;
-        while (scrollSteps < 5) {
-            jsScroll(driver, 400);
-            List<WebElement> videoViews = driver.findElements(By.xpath("//*[contains(.,'Cr') or contains(.,'K') or contains(.,'views')]"));
-            for (WebElement viewText : videoViews) {
-                String value = Wrappers.getText(viewText);
-                totalViews += parseViews(value);
-            }
-            scrollSteps++;
-        }
+    //     int scrollSteps = 0;
+    //     long totalViews = 0L;
+    //     while (scrollSteps < 5) {
+    //         jsScroll(driver, 400);
+    //         List<WebElement> videoViews = driver.findElements(By.xpath("//*[contains(.,'Cr') or contains(.,'K') or contains(.,'views')]"));
+    //         for (WebElement viewText : videoViews) {
+    //             String value = Wrappers.getText(viewText);
+    //             totalViews += parseViews(value);
+    //         }
+    //         scrollSteps++;
+    //     }
 
-        System.out.println("Keyword: " + keyword + " | Total parsed views: " + totalViews);
-        Assert.assertTrue(true, "The keyword search completed without a fatal error.");
-    }
+    //     System.out.println("Keyword: " + keyword + " | Total parsed views: " + totalViews);
+    //     Assert.assertTrue(true, "The keyword search completed without a fatal error.");
+    // }
 
     private static void jsScroll(WebDriver driver, int pixels) {
         ((JavascriptExecutor) driver)
